@@ -1,0 +1,142 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block body %}
+
+<div >
+  {% if messages %}
+    <ul class="messages">
+      {% for message in messages %}
+      <div class="alert alert-{{message.tags}}" role="alert">
+        {{message}}
+      </div>       
+      {% endfor %}
+    </ul>
+  {% endif %}
+         
+</div>
+
+
+    <div id="banner" class="banner full-screen-mode parallax">
+        <div class="container pr">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="banner-static">
+                    <div class="banner-text">
+                            <h1><b>مراسيل</b> </h1>
+                            <h1> موقع يوصل ليك كل الطلبات في اي مكان </h1>
+
+                            <div class="book-btn">
+                                <a href="{% url 'item-create' %}" class="table-btn hvr-underline-from-center" style="border-radius: 50px;">مرسال جديد</a>
+                            </div>
+
+
+                            <a href="#about">
+                                <div class="mouse"></div>
+                            </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    
+
+    <div id="menu" class="menu-main pad-top-100 pad-bottom-100">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="wow fadeIn" data-wow-duration="1s" data-wow-delay="0.1s">
+                        <p class="block-title text-center">
+                        <h2 class="block-title text-center">
+                            عن مراسيل  
+                                           
+                        <h3 class="title-caption text-center"> لو عندك مراسيل كتيره وانت مشغول ممكن مراسيل يقضيهاعنك , مراسيل بساعدك في عمل المراسيل اليومية</h3>
+                            
+                        {% if request.user.is_authenticated %}
+                        <div class="book-btn title-caption text-center" style="border-radius: 50px;">
+                            <a href="{% url 'item-create' %}" class="table-btn hvr-underline-from-center title-caption text-center" >مرسال جديد</a>
+                        </div>
+                        {{request.user.bio}}..............
+                          {% if request.user.bio %}
+                          {% endif %}
+
+                        {% else %}
+                        <p class=" title-caption text-center"> سجل معانا عشان عشان تطلب مرسال </p>
+                        <div class="row title-caption text-center" >
+                           <div class="btn btn-info" style="border-radius: 50px !important;">
+                            <a href="{% url 'users:register' %}" class="btn ">حساب جديد</a>
+                            
+                          </div> 
+
+                         
+                          <h3>او</h3>
+                        <div class="btn btn-success" style="border-radius: 50px !important;">
+                          <a href="{% url 'users:login' %}" class="btn" >تسجيل الدخول</a>
+                        </div>
+                    </div>
+
+                        
+                        {% endif %} 
+                    </p>     
+                    </div>
+
+                    
+                </div>
+                <!-- end col -->
+            </div>
+            <!-- end row -->
+        </div>
+        <!-- end container -->
+    </div>
+    <!-- end menu -->
+
+    <div id="our_team" class="team-main pad-top-100 pad-bottom-100 parallax">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    
+                    <div class="team-box">
+
+                        <div class="row">
+                            <div class="col-md-12 col-sm-6">
+                                <div class="sf-team">
+                                    <div class="thumb">
+                                        <a href="#"><img src="images/staff-01.jpg" alt=""></a>
+                                    </div>
+                                    <div class="text-col">
+                                        <h3>اشتغل معانا</h3>
+                                        <p><b> لو عندك وسليه مواصلات وعايز تزيد دخلك سجل معانا كمندوب مراسيل</p></b>
+                                        
+                                            <div class="book-btn title-caption text-center">
+                                                <a href="{% url 'workers:worker_user' %}" class="table-btn hvr-underline-from-center title-caption text-center" style=" background-color: #080808 !important ; border-radius: 50px; ">مندوب جديد</a>
+                                            </div>
+                                         
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        <!-- end row -->
+
+                    </div>
+                    <!-- end team-box -->
+
+                </div>
+                <!-- end col -->
+            </div>
+            <!-- end row -->
+        </div>
+        <!-- end container -->
+    </div>
+    <!-- end team-main -->
+
+  
+   
+    <a href="#" class="scrollup" style="display: none;">Scroll</a>
+
+    
+
+ 
+
+{% endblock body %}

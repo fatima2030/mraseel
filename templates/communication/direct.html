@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block static %}
+<script>
+    $(".chat_ib").click(function () {
+        window.location = $(this).find("a").attr("href");
+        return false;
+    });
+</script>
+{% endblock %}
+{% block body %}
+<div class="container">
+    <h3 class=" margin-left">Messaging</h3>
+    <div class="messaging">
+        <div class="inbox_msg">
+            <div class="inbox_people">
+
+                <div class="inbox_chat">
+                    {% for sender in  senders%}
+                    <div class="chat_list active_chat">
+                        <a href="/communication/detail/{{sender.id}}">
+                            <div class="chat_people">
+                                <div class="chat_img"> <img src="{{sender.profile_picture.url}}" alt="sunil"> </div>
+                                <div class="chat_ib">
+
+                                    <h5>{{sender.username}}
+                                        <span class="chat_date">{{sender.last_login}}</span></h5>
+                                </div>/////////////////////{{sender.num}}//////////////////////
+                            </div>
+                    </div>
+                    </a>
+                    {% endfor %}
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

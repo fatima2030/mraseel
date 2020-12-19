@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block body %}
+
+{% if request.user.is_authenticated %}
+
+<div id="pricing" class="pricing-main pad-top-100 pad-bottom-100">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-8 col-md-offset-2">
+
+
+				<div >
+					{% if messages %}
+						<ul class="messages">
+							{% for message in messages %}
+							<div class="alert alert-{{message.tags}}" role="alert">
+								{{message}}
+							</div>       
+							{% endfor %}
+						</ul>
+					{% endif %}
+                    <h2 class="block-title text-center">
+						مرسال جديد 	
+					</h2>
+				</div>
+				<div class="panel-pricing-in">
+					
+				<div  class="crad"  style="border-color: #e75b1e;">
+					
+					<div class="crad-body col-md-10 col-md-offset-1">
+						
+							<form method="POST" class="form-group" style="margin-top: 5%;" enctype="multipart/form-data">
+								{% csrf_token %}
+								<div class="row justify-content-center">
+									<div class="col-6">
+									{{ form|crispy }}
+									<div class="col text-center">
+										<button type="submit" class="btn btn-success">موافق</button>
+									</div>
+									</div>
+								</div>
+								</form>
+
+						
+					
+					
+				  </div>
+				  <div class="card-footer">
+			  
+				</div>
+
+				</div>
+				
+
+
+			</div>
+		</div>
+		
+
+  
+  
+
+	</div>
+  </div>
+
+{% else %}
+
+<div id="pricing" class="pricing-main pad-top-100 pad-bottom-100">
+	<div class="container">
+		<div class="row">
+			
+			<div class="panel-pricing-in">
+				<!-- item -->
+				<div class="col-md-8 col-sm-4 text-center col-md-offset-2">
+					<div class="panel panel-pricing">
+						<div class="panel-heading">
+							<div class="pric-icon">
+							</div>
+							
+						</div>
+						<div class="panel-body text-center">
+							<p><strong>لازم بكون عندك حساب عشان تطلب مرسال<span>  <a href="{% url 'users:register' %}" > <span>حساب جديد</span></a></span> او <span> <a href="{% url 'users:login' %}" >   <span> تسجيل الدخول </span>  </a>   </span></strong></p>
+						</div>
+						
+						
+					</div>
+				</div>
+
+				
+			</div>
+		</div>
+	</div>
+</div>
+
+{% endif %}
+
+
+
+
+
+{% endblock %}

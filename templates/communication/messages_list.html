@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block static %}
+<script>
+    $(".chat_ib").click(function () {
+        window.location = $(this).find("a").attr("href");
+        return false;
+    });
+</script>
+{% endblock %}
+{% block body %}
+
+
+<div id="pricing" class="pricing-main pad-top-100 pad-bottom-100">
+    <div class="container">
+        <div class="row">
+            <div class="panel-pricing-in">
+     
+                <div class="col-md-8 col-sm-4 text-center col-md-offset-2">
+                    <div class="panel panel-pricing">
+                        <div class="panel-heading">
+                            
+                        </div>
+                        <div class="panel-body text-center">
+                            <p><strong><span>الرسائل</span></strong></p>
+                        </div>
+                        
+                        
+                       
+                        {% for sender in senders  reversed %}
+
+                            <li class="list-group-item"  >
+
+                                    <a href="/communication/detail/{{sender.id}}" >
+                                       <p style="display: inline-block !important;"> <img src="{{sender.your_picture.url}}" style="width: 80px; height: 80px; border-radius: 50%;" alt="">
+                                        <b>{{sender.username}}</b>{{sender.last_login}}
+                                    </a>
+                                
+                            </li>
+                            
+                        {% endfor %}
+
+                        
+                    </div>
+                </div>
+                <!-- /item -->
+
+            </div>
+        </div>
+        <!-- end row -->
+    </div>
+    <!-- end container -->
+</div>
+<!-- end pricing-main -->
+
+
+{% endblock %}

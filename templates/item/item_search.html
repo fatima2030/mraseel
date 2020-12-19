@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<div class="jumbotron jumbotron-fluid">
+        <div class="container">
+          <h1 class="display-4" style="color:white;">Renten</h1>
+          <a href="" class="btn btn-info">Kayıt Ol</a><a href="" class="btn btn-success">Giriş Yap</a>
+        </div>
+  </div>
+  <div class="container">
+    <div class="row text-center">
+      {%for city in items.all_categories%}
+        <div class="col-1">
+            <a class="btn btn-{{city.get_color_display}} btn-circle btn-circle-lg m-1">
+              <i class="fa fa-{{city.get_icon_display}}"></i>
+              <span>{{city.name}}</span>
+            </a>
+        </div>
+      {% endfor %}  
+    </div>
+    <div class="dropdown" style="margin-top:5%;">
+        <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Fiyat
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <form method="GET" action="">
+            {% csrf_token %}
+            <input type="number" placeholder="Min" step="0.01" min="0" id="minPrice" name="minPrice">
+            - <input type="number" placeholder="Max" step="0.01" min="0" id="maxPrice" name="maxPrice">
+            <input type="submit" value="submit" style="display: none;"/>
+          </form>  
+        </div>
+      </div>
+      
+    <div class="row text-center" id="items-mainpage">
+      {% for item in items.all_items %}
+        <div class="col-3">
+          <div class="card">
+            <img class="card-img-top" id="item-image" src="{{ item.picture.url }}" alt="Card image cap">
+            <div class="card-body">
+              <h5 class="card-title" id="item-header"><a href="{% url 'item-detail' item.city.slug item.slug %}">{{item.name}}</a></h5>
+              <p class="card-text" id="item-text">{{item.description|truncatewords:5}}...</p>
+              <p class="card-text"></p>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+  
+{% endblock body %}

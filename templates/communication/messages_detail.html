@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block body %}
+{% load crispy_forms_tags %}
+
+<div class="container">
+    <div class="col-md-8 col-sm-4 text-center col-md-offset-2"  id="message_area" >
+        <ul class="list-group">
+        {% for object in object_list %}
+        <li class="list-group-item
+                            {% if object.sender == request.user %}
+                             
+                             text-left
+                            {% else %}
+                            text-right
+                            {% endif %}
+                            ">
+            {% if object.sender == request.user %}
+            {% if object.file %}
+            <a href="{{ object.file.url }}" style="border-radius: 50%;">
+                <img  src="{{ object.file.url }}" alt="..." height="150px" width="150px"> 
+            </a>
+            {% endif %}
+            
+            {{ object.message }} 
+            <spon class=" btn btn-success" style="border-radius: 50%;" >
+                {{ object.sender.username }}
+            </span>
+            {% else %}
+            <span class="btn btn-danger" style="border-radius: 50%;">
+                {{ object.sender.username }}
+            </span>
+            {{ object.message }}
+            
+            {% if object.file %}
+            <a href="{{ object.file.url }}" style="border-radius: 50%;">
+                <img  src="{{ object.file.url }}" alt="..." height="150px" width="150px"> 
+            </a>
+            {% endif %}
+            {% endif %}
+        </li>
+        {% endfor %}
+        </ul>
+          
+        <form method="POST" action="{% url 'communication:messages_send' user_id=other_user.id %}" class="form-group" style="margin-top: 5%;" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="row justify-content-center">
+				<div class="col-6">  
+					{{ form|crispy }}
+					<div class="col text-center">
+						<button type="submit" class="btn btn-success">إرسال</button>
+					</div>
+				</div>
+            </div>
+        </form>
+        {% if accpet.description%}
+        <a class="btn btn-danger " style="border-radius: 20px !important; color:rgb(77, 72, 72)" href="{% url 'item_remove' pk=accpet.id %}"><b> موافق</b></a> 
+
+        {% endif %}
+
+
+    </div>
+</div>
+{% endblock %}

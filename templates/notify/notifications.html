@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% load static%}
+
+
+
+
+{% block title %}التنبيهات{% endblock %}
+{% load crispy_forms_tags %}
+
+{% block body %}
+{% for notification in notifications %}
+
+{% if notification.notification_type == 1 %}
+
+<div id="pricing" class="pricing-main pad-top-10 pad-bottom-0">
+	<div class="container">
+		<div class="row">
+			<div class="panel-pricing-in">
+				<div class="col-md-8 col-sm-4 text-center col-md-offset-2">
+					<div class="panel panel-pricing">
+						<div class="panel-heading">
+							<div class="pric-icon" >
+							</div>
+					    </div>
+						  <div class="panel-body text-center" >       
+                <div class="notification" style="background-color: rgb(207, 207, 207);">
+                  <a href="{% url 'notify:delete-notification' notification.id %}" class="delete" > </a>
+                    <p>
+                      <b> عرض من:</b><strong><span>{{ notification.sender.username }}</span></strong>
+                      <a href="{% url 'workers:user_profile' pk=notification.sender.id %}"> <img src="{{ notification.sender.your_picture.url }}"  style="width: 80px; height: 80px; border-radius: 50%;" alt=""></a> 
+					</p>
+
+
+
+					<a class="btn btn-danger " style="border-radius: 20px !important; color:rgb(77, 72, 72)"  href="{% url 'notify:accept' notification.id %}"  ><b> موافق</b></a> 
+
+
+
+					
+                    <a   style="border-radius: 20px !important; color:rgb(77, 72, 72)" {%if request.user.id and request.user != notification.sender  %}
+                       href="/communication/detail/{{notification.sender.id}}/" class="btn btn-success"><b>تواصل برساله</b>
+                      {% endif %}
+                    </a>
+                </div>
+              </div>
+					  </div>
+				  </div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+{% endif %}
+{% endfor %}
+{% endblock %}

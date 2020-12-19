@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% load static%}
+
+{% block body %}
+
+ {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <div class="alert alert-{{message.tags}}" role="alert">
+                {{message}}
+            </div>       
+            {% endfor %}
+        </ul>
+        {% endif %}
+
+
+<div id="pricing" class="pricing-main pad-top-100 pad-bottom-100">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <h2 class="block-title text-center">
+                    الطلبات المتاحة                </h2>
+            </div>
+            <div class="panel-pricing-in">
+                <!-- item -->
+                {% for job in jobs reversed %}
+                {% if job.is_available == True %}
+                <div class="col-md-4 col-sm-4 text-center">
+
+                    <div class="panel panel-pricing">
+                        <div class="panel-heading">
+                            <div class="pric-icon">
+                                <h3>{{job.city}}</h3>
+                            </div>
+                        </div>
+                        <div class="panel-body text-center">
+                        </div>
+                        <ul class="list-group text-center">
+                            <li class="list-group-item"><b>الاسم:</b>{{job.owner.username}}</li>
+                            <li class="list-group-item"><b>الطلب:</b> {{job.name}}</li>
+                            <li class="list-group-item"><b>مكان الطلب:</b> {{job.From}}</li>
+                            <li class="list-group-item"><b>مكان التوصيل :</b> {{job.to}}</li>
+                            <li class="list-group-item"><b>سعر التوصيل:</b>{{job.price}}GSD</li>
+                            {% if job.description%}
+                             <li class="list-group-item"><b>تفاصيل الطلب:</b>{{job.description}}</li>
+
+                            {% endif %}
+                        </ul>
+                        <div class="panel-footer">
+ 
+
+                                <a class="btn btn-lg btn-block hvr-underline-from-center" href="{% url "item_rent" pk=job.id %}">عرض للتوصيل </a>
+                                <a class="btn btn-lg btn-block hvr-underline-from-center" href="/communication/detail/{{job.owner.id}}/send" >تواصل برساله </a>
+
+                        </div>
+                    </div>
+                   
+                </div>
+                {% endif %}
+
+                
+                <!-- /item -->
+                 {% endfor %}
+
+                
+               
+            </div>
+        </div>
+        <!-- end row -->
+    </div>
+    <!-- end container -->
+</div>
+{% endblock %}

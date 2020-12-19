@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+
+{% block title %}Login to Account{% endblock %}
+{% load crispy_forms_tags %}
+
+{% block body %}
+<div id="pricing" class="pricing-main pad-top-100 pad-bottom-100">
+    <div class="container">
+        <div class="row">
+            
+            <div class="panel-pricing-in">
+                <!-- item -->
+                <div class="  col-md-4 col-sm-4 text-center col-md-offset-2">
+                    <div class="panel panel-pricing">
+                        <div class="panel-heading">
+                            <div class="pric-icon">
+                                
+                            </div>
+                             {% if request.user.id == profile.id %}
+                             {% if directs_count %}
+                                      <i class="fa fa-bell fa-5x" style=" color: red; " >{{ directs_count }} </i>
+                             {% endif %}
+                                
+                                <a class="btn btn-secondary btn-lg" href="{% url "communication:messages_show" %}">
+                                        <h3>الرسائل</h3>
+                                </a>
+                            {% endif %}
+                        </div>
+                        
+                        
+                    </div>
+                </div>
+                <!-- /item -->
+
+                <!-- item -->
+                <div class="col-md-4 col-sm-4 text-center ">
+                    <div class="panel panel-pricing">
+                        <div class="panel-heading">
+                            <div class="pric-icon">
+                            </div>
+                            {% if request.user.id == profile.id %}
+
+                                
+                            <a class="btn btn-secondary btn-lg" href="{% url "workers:Jobs" %}">
+                                    <h3>الطلبات الجديده</h3>
+                            </a>
+                        {% endif %}
+                        </div>
+                        
+                    </div>
+                </div>
+                <!-- /item -->
+
+                
+            </div>
+        </div>
+        <div class="row">
+            <div class="panel-pricing-in">
+                <!-- item -->
+                <div class="col-md-8 col-sm-4 text-center col-md-offset-2">
+                    <div class="panel panel-pricing">
+                        
+                        <div class="panel-body text-center">
+                            <img src="{{ profile.your_picture.url }}" style="width: 100px; height: 100px; border-radius: 50%;" alt="">
+                        </div>
+                        <ul class="list-group text-center">
+                            <li class="list-group-item">الاسم :{{ profile.username }}</li>  
+                            <li class="list-group-item">bio:{{ profile.bio }}</li>
+                            <li class="list-group-item">وسيله المواصلات :{{ profile.car_type }}</li>
+                            <li class="list-group-item">رقم التلفون: {{ profile.telephone }}</li>
+                            </ul>
+                        <div class="panel-footer">
+                            {% if request.user.id == profile.id %}
+                            <a class="btn btn-lg btn-block hvr-underline-from-center" href="{% url "users:profile_update" %}">
+                                    تحديث 
+                            </a>
+                            {% endif %}
+                            
+                        </div>
+                    </div>
+                </div>
+                <!-- /item -->
+
+            </div>
+
+        </div>
+        <!-- end row -->
+    </div>
+    <!-- end container -->
+</div>
+<!-- end pricing-main -->
+{% endblock %}

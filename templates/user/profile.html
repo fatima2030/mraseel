@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+{% block title %}Password Reset{% endblock %}
+
+
+{% block body %}
+
+
+<div class="container">
+        <div class="row">
+                <div class="col-3">
+                        <img src="{{profile.profile_picture.url}}" alt="Profil Resmi" width="300px" height="430px">
+                        <div style="text-align: center; margin-top:2%;">
+                                {% if request.user.id == profile.id %}
+                                        <a class="btn btn-secondary btn-lg" href="{% url "users:profile_update" %}">
+                                                <small>تحديث Güncelle</small>
+                                        </a>
+                                        <a class="btn btn-secondary btn-lg" href="{% url "communication:messages_list" %}">
+                                                <small>الرسائل</small>
+                                        </a>
+                                        {% endif %}
+                        </div>
+                </div>
+                <div class="col-9">
+                        <ul class="list-group">
+                                <li class="list-group-item active"> معلومات المستخدم Kullanıcı Bilgileri 
+                                        {% if request.user.id == profile.id %}
+                                <a class="btn btn-danger btn-sm" href="{% url 'rent_requests' %}" style="margin-left: 70%;">الطلبات الواردة Gelen İstekler</a>
+                                        {% endif %}
+                                </li>
+
+                                <li class="list-group-item"> <span class="font-weight-bold">Kullanıcı Adı: </span>  {{ profile.username }}</li>
+                                <li class="list-group-item"> <span class="font-weight-bold"> Ad: </span> {{ profile.first_name }}</li>
+                                <li class="list-group-item"> <span class="font-weight-bold"> nak name Soyad: </span> {{ profile.last_name }}</li>
+                                <li class="list-group-item"> <span class="font-weight-bold"> Email: </span> {{ profile.email }}</li>
+                                <li class="list-group-item"> <span class="font-weight-bold" > آخر تسجيل دخول Son Giriş: </span> {{ profile.last_login }}</li>
+                                <li class="list-group-item"> <span class="font-weight-bold" > Telefon: </span> {{ profile.telephone }}</li>
+                                <li class="list-group-item"> <span class="font-weight-bold" > اريخ الميل Doğum Tarihi: </span> {{ profile.birth_date }}</li>
+                                <li class="list-group-item"> <span class="font-weight-bold" > موقعك Konum: </span> {{ profile.location }}</li>
+                        </ul>
+                </div>
+
+        </div>
+        <br>
+
+        <div class="row" style="text-align: center; margin-top: 3%;">
+                <div class="col-6">
+                        <h5 class="font-weight-bold" >منتجاتك Ürünleriniz</h5>
+                        <hr>
+                        <ul class="list-unstyled">
+                                {% for item in profile.items.all %}
+                                <li class="media">
+                                        <a href="{% url 'item-detail' item.slug %}"> <img src="{{item.picture.url}}" class="mr-3 profile_item_picture" alt="Ürün Resmi" height="150px" width="150px"></a>
+                                        <div class="media-body">
+                                                <h5 class="mt-0 mb-1"><a href="{% url 'item-detail' item.slug %}">{{item.name}}</a></h5>
+                                                <p>{{item.description|truncatewords:5}}...</p>
+                                                <div class="row">
+                                                        <div class="col-6">
+                                                                Durum حالة: 
+                                                                {% if item.is_available %}
+                                                                للإيجار Kiralık
+                                                                {% else %}
+                                                                ليس للإيجار  Kiralık Değil
+                                                                {% endif %}
+                                                        </div>
+                                                        <div class="col-6">
+                                                                <div class="btn-group">
+                                                        {% if request.user.id == profile.id%}  
+                                                                {% if item.is_available %}
+                                                                        
+                                                                        <a class="btn btn-danger btn-sm" href="{% url 'switchrent' pk=item.id %}">إزالة من الإيجار Kiralıktan Kaldır</a>
+                                                                        <a class="btn btn-warning btn-sm" href="{% url 'item-update' itemslug=item.slug %}">تحديث Güncelle</a>
+                                                                {% else %}
+                                                                        <a class="btn btn-success btn-sm" href="{% url 'switchrent' pk=item.id %}">أضف إلى قائمة الإيجار Kiralık Listesine Ekle</a>
+                                                                        <a class="btn btn-warning btn-sm"  href="{% url 'item-update' itemslug=item.slug %}">تحديث Güncelle</a>
+                                                                {% endif %}
+                                                                {% endif %}
+                                                                </div>
+                                                        </div>
+                                                </div>
+                                        </div>
+                                </li>
+                                <hr>
+                                {% endfor %}
+                        </ul>
+                </div>
+
+                <div class="col-6">
+                        {% if request.user.id == profile.id%}
+                        <h5 class="font-weight-bold" >طلبات التأجير الخاصة بك Kiralama İstekleriniz</h5>
+                        <hr>
+                        <ul class="list-unstyled">
+                                {% for i in profile.itemrental_set.all %}
+                                <li class="media">
+                                       <a href="{% url 'item-detail' i.item.slug %}"> <img  src="{{i.item.picture.url}}" class="mr-3 profile_item_picture" alt="..." height="150px" width="150px"></a>
+                                        <div class="media-body">
+                                                <h5 class="mt-0 mb-1"><a href="{% url 'item-detail' i.item.slug %}">{{i.item.name}}<a></h5>
+                                                <div class="row">
+                                                        <div class="col-6">
+                                                                مالك المنتجÜrünü Sahibi: {{i.item.owner}}
+                                                                <br>
+                                                                Oluşturulma Zamanı: {{i.created}}
+                                                        </div>
+                                                        <div class="col-6">
+                                                                <a class="btn btn-danger" href="{% url 'cancel_request' pk=i.item.owner.id rental_pk=i.id %}">إلغاء İptal Et</a>
+                                                        </div>
+                                                </div>
+                                        </div>
+                                </li>
+                                <hr>
+                                {% endfor %}
+                        </ul>
+                        {% endif %}
+                </div>
+        </div>
+        
+</div>
+{% endblock %}

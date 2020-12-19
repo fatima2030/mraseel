@@ -1,0 +1,87 @@
+
+    <div id="loader">
+      <div id="status"></div>
+  </div>
+  <div id="site-header">
+      <header id="header" class="header-block-top" style="background-color: #202020 !important  ;">
+          <div class="container">
+              <div class="row" >
+                  <div class="main-menu " >
+                      <!-- navbar -->
+                      <nav class="navbar navbar-default fixed-topd-flex "    id="mainNav">
+                          <div class="navbar-header">
+                              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                                  <span class="sr-only">Toggle navigation</span>
+                                  <span class="icon-bar"></span>
+                                  <span class="icon-bar"></span>
+                                  <span class="icon-bar"></span>
+                              </button>
+                              <div class="logo">
+                                  <a class="navbar-brand js-scroll-trigger logo-header" href="/">
+                                      <img src="images/logo.png" alt=""><h1>مراسيل</h1>
+                                  </a>
+                              </div>
+                          </div>
+                          <div id="navbar" class="navbar-collapse collapse">
+                              <ul class="nav navbar-nav navbar-right">
+                                <li class="active"><a href="/">الصفحه الرئيسة</a></li>
+
+                                {% if request.user.is_authenticated %}
+                                {% if request.user.car_type %}
+                                <li><a class="nav-link" href="{% url "workers:me"  %}">الطلبات </a></li>
+                                {% else %}
+                                <li>
+                                  <a href="{% url 'notify:show-notifications' %}" class="navbar-item">
+                                    <i class="material-icons">اشعارات الطلبات </i>
+                                    
+                                    {% if count_notifications %}
+                                    <span class="fa fa-bell" style=" color: red; " >{{ count_notifications }}</span>
+                                    {% else %}
+                                    <span class="fa fa-bell-o" style=" color: red; " > </span>
+                                    {% endif %}
+                                  </a>
+                                </li>
+
+                                {% endif %}
+                                  
+                                  
+                                  <li >
+                                    <a href="{% url "communication:messages_list" %}" class="navbar-item" style="font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">
+                                      <i class="material-icons">اشعارات الرسائل</i>
+                                      {% if directs_count %}
+                                      <span class="fa fa-bell" style=" color: red; " >{{ directs_count }} </span>
+                                      {% else %}
+                                      <span class="fa fa-bell-o" style=" color: red; " > </span>
+                                      {% endif %}
+                                    </a>
+                                  </li>
+                                  <li><a class="nav-link" href="{% url "users:logout" %}">تسجيل خروج</a></li>
+
+                                  {% else %}
+                                  <li class="nav-item ">
+                                    <a class="nav-link" href="{% url "users:register" %}">حساب جديد</a>
+                                  </li>
+                                  <li class="nav-item">
+                                    <a class="nav-link " href="{% url "users:login" %}">تسجيل دخول</a>
+                                  </li>
+                                  {% endif %}
+                              </ul>
+                          </div>
+                          <!-- end nav-collapse -->
+                      </nav>
+                      <!-- end navbar -->
+                  </div>
+              </div>
+              <!-- end row -->
+          </div>
+          <!-- end container-fluid -->
+      </header>
+      <!-- end header -->
+  </div>
+
+  <br />  <br />
+  <br />
+
+<!-- end site-header -->
+
+

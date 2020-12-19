@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block body %}
+
+    <h1 style="text-align: center; margin-top:5%;">طلبات الإيجارKiralama İstekleri</h1>
+    <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">نتاجUrun</th>
+                <th scope="col">بتوصية منİsteği Yapan</th>
+                <th scope="col">Tarihالتاريخ</th>
+                <th scope="col">Kararالقرار</th>
+              </tr>
+            </thead>
+            <tbody>
+            {% for i in items.all_rents reversed %}
+                {% if i.item.owner == request.user and i.fulfilled == False %}
+                    <tr>
+                        <td>{{i.item.name}}</td>
+                        <td>{{i.hirer}}</td>
+                        <td>{{i.created}}</td>
+                        <td>
+                            <a class="btn btn-success" href="{% url 'item_accept' pk=i.item.owner.id rental_pk=i.id %}">قبولKabul</a>
+                            <a class="btn btn-danger" href="{% url 'item_reject' pk=i.item.owner.id rental_pk=i.id %}">الرفض</a>
+                        </td>
+                    </tr>
+
+                    <a   style="border-radius: 20px !important; color:rgb(77, 72, 72)" {%if request.user.id and request.user != notification.sender  %}
+                       href="/communication/detail/{{i.hirer.id}}/" class="btn btn-success"><b>تواصل برساله</b>
+                      {% endif %}
+                    </a>
+                {% endif %}
+            {% endfor %}  
+            </tbody>
+          </table>
+          
+    
+
+{% endblock body %}

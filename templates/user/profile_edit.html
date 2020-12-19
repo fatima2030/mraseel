@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block body %}
+<form method="POST" class="form-group" style="margin-top: 5%;" enctype="multipart/form-data">
+	{% csrf_token %}
+	<div class="row justify-content-center">
+		<div class="col-6">
+			{{ form|crispy }}
+			<a href="/user/change_password/">change password</a>
+			<div class="col text-center">
+				<button type="submit" class="btn btn-success">Kaydet</button>
+			</div>
+		</div>
+	</div>
+</form>
+{% endblock %}

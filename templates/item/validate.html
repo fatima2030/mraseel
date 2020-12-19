@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-4 offset-4" style="margin-top: 10%;">
+            <span class="text-info">{{ item }}</span> سيتم حذف المنتج من النظام <strong class="text-warning">ل انتم متأكدونEmin misiniz?</strong>
+            <form method="GET">
+                <button type="submit" class="btn btn-primary"  name="valid" value="true">Evet</button>
+                <a class="btn btn-primary" href="">لا
+                    laHayır</a>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+

@@ -1,0 +1,83 @@
+{% for i in itemdetail %}
+    {% for c in city %}
+    <div class="row">
+        <div class="col-6">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="#">لصفحة الرئيسيةAnasayfa</a></li>
+                    <li class="breadcrumb-item"><a href="#">{{c.name}}</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">{{i.name}}</li>
+                </ol>
+            </nav>
+            <img id="itemdetail-image" src="{{i.picture.url}}" width="500px" height="500px" alt="ItemPicture">
+        </div>
+        <div class="col-6" id="itemdetail-description">
+            {% if request.user.id == i.owner.id %}
+                <a class="btn btn-outline-primary" href="{% url 'item-update' i.slug %}"> تحديث Güncelle</a>
+                <a class="btn btn-outline-danger" href="{% url 'item-update' i.slug %}">حذف Sil</a>
+            {% else %}
+                {% if i.is_available %}
+                <a class="btn btn-outline-success" href="#">تأجير Kirala</a>
+                {% else %}
+                <a class="btn btn-danger" href="#">المنتج ليس للإيجار Urun Kiralık Değil</a>
+                {% endif %}
+            {% endif %}
+            <br>
+            <br>
+            <h3>₺{{i.price}}</h3>
+            <br>
+            <h4>{{i.name}}</h4>
+            <br>
+            <p class="font-italic">{{i.created_at}} تم تأجيره  tarihinde kiraya verildi</p>
+            <hr>
+            <p style="color:gray" >{{i.description}}</p>
+            <div class="badge badge-danger text-wrap" id="itemdetail-owner" style="width: 6rem;">
+                {{i.owner}}
+            </div>
+            <br>
+            <p style="color:gray"> راسل البائع Satıcıya mesaj at</p>
+            <br>
+            <div class="card">
+                <div class="card-body">
+                    
+                        <p>Rented by rental.hirer</p>
+                    
+                        <p>Requested by rental.hirer
+                        
+                            <a class="btn btn-sm btn-primary"
+                               href="#">Accept</a>
+                        
+                        </p>
+                    
+                    <p>Date rental.created</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    {% endfor %}
+    {% endfor %}
+</div>
+
+{% else %}
+    <h1>لا توجد منتجات Ürün Bulunamadı</h1>
+{% endif %}
+
+{% if city and itemdetail%}
+    
+    {% for i in city  %}
+        {{i}}
+    {% endfor %}
+    
+    {% for i in itemdetail  %}
+        {{i}}
+    {% endfor %}
+        
+        
+{% else %}
+    <h1>nothing!</h1>
+    dneme
+{% endif %}
+    
+    
+{% endblock body %}
